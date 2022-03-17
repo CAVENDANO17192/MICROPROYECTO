@@ -61,7 +61,8 @@ void UART0IntHandler(void)
 }
 
 struct DATOS_STRUCT imu;
-struct PID_STRUCT pid;
+struct PID_STRUCT posicion;
+struct PID_STRUCT velocida;
 struct ENVIO_STRUCT python;
 
 int main(void)
@@ -76,10 +77,10 @@ int main(void)
         if(update==1)
         {
             imu.acelerometro = MPU6050READDATA(&imu);
-           // UARTprintf("Ang x: %d| Ang. y: %d |Ang. z %d | Gyro. x %d | Gyro. y %d | Gyro. z %d | Accx. %d | Accy. %d \n", (int)imu.ax, (int)imu.ay, (int)imu.az, (int)imu.gx, (int)imu.gy, (int)imu.gz, (int)imu.Accx, (int)imu.Accy);
+
             //imu.filtro_posicion = filtro_complementario_posicion(&imu, imu.Filtrox, imu.gx, imu.Accx, imu.Filtroy, imu.gy, imu.Accy, dt, alpha);
             //imu.filtro_velocidad = filtro_complementario_velocidad(&imu, imu.Velocidadx, imu.gx, imu.Velocidady, imu.gy, imu.Velocidadz, imu.gz, alpha);
-            //pid.control_pid = PID_control(&pid, imu.Filtrox, 0.00, pid.Ek, pid.ek,  1, .2, 0.0005);
+            //pid.control_pid = PID_control(&pid, imu.Filtrox, 0.00(angulo balancin quieto), pid.Ek, pid.ek,  1, .2, 0.0005);
             update=0;
         }
         python.envio=descon_UART(&python,imu.Accx);
